@@ -172,7 +172,6 @@ No Excel, os dados são armazenados e organizados em **planilhas** (worksheets),
 |------------------------|---------------------------|---------------------------------------------------------------------------------------------------|
 | Planilha               | Tabela                   | Uma tabela no Databricks é como uma planilha no Excel: contém linhas e colunas.                  |
 | Abas                   | Tabelas em um Database   | No Databricks, várias tabelas são armazenadas dentro de um banco de dados.                       |
-| Workbook               | Database                 | Um database agrupa várias tabelas relacionadas, como um arquivo Excel agrupa várias planilhas.   |
 | Fórmulas               | Queries SQL              | No Databricks, usamos SQL para manipular os dados em vez de fórmulas predefinidas do Excel.      |
 | Power Query            | Transformações com SQL   | A funcionalidade de Power Query do Excel é similar às transformações que podemos realizar no Databricks com SQL. |
 
@@ -196,15 +195,11 @@ Essa abordagem é excelente para pequenas análises, mas torna-se inviável para
 
 O Databricks utiliza uma arquitetura distribuída e baseada em nuvem. Aqui estão os principais componentes:
 
-1. **Cluster**:
-   - Conjunto de máquinas virtuais (nós) que processam os dados.
-   - Cada cluster tem um **Driver** (controla a execução) e vários **Workers** (realizam as operações nos dados).
-
-2. **Cliente**:
+1. **Cliente**:
    - A interface web onde você escreve consultas SQL, cria notebooks ou visualiza resultados.
    - Não é responsável pelo processamento, mas apenas por enviar as instruções ao servidor.
 
-3. **Servidor**:
+2. **Servidor**:
    - O Databricks processa os dados usando o Apache Spark em um ambiente distribuído.
    - Isso significa que os dados são divididos em blocos e processados simultaneamente por múltiplos workers.
 
