@@ -1,6 +1,61 @@
 ## **Introdução**
 
-Bem-vindos ao nosso workshop sobre SQL no **Databricks**. Hoje, vamos explorar os conceitos básicos de bancos de dados e como o Databricks pode ser usado para gerenciar e analisar dados de forma eficiente e escalável. Nosso objetivo é garantir que você tenha uma base sólida para aproveitar as próximas aulas e trabalhar com SQL em um ambiente de big data.
+Bem-vindos ao nosso workshop sobre SQL no **Databricks**. Hoje, vamos explorar os conceitos básicos de bancos de dados e como o Databricks pode ser usado para gerenciar e analisar dados de forma eficiente e escalável. 
+
+Nesta aula, exploraremos como usar comandos SQL no Databricks para resolver desafios reais de negócios. Vamos entender como manipular dados em grande escala e como essas ferramentas podem gerar insights estratégicos para diferentes áreas da organização. O foco será em comandos essenciais, como **SELECT**, **JOIN**, **GROUP BY**, **HAVING**, e técnicas avançadas como **Subqueries**, **CTEs**, **Views**, e **Criação de Tabelas**.
+
+---
+
+## **Comandos SQL Abordados**
+
+### **Comandos Essenciais**
+1. **SELECT:** Para consultar dados de tabelas.
+2. **FROM:** Para definir a origem dos dados.
+3. **WHERE:** Para aplicar filtros.
+4. **GROUP BY e HAVING:** Para agrupar e filtrar dados agregados.
+5. **ORDER BY:** Para ordenar os resultados.
+6. **LIMIT:** Para restringir o número de linhas no resultado.
+
+### **Comandos Avançados**
+1. **JOINs:** Para combinar dados de tabelas relacionadas (**INNER JOIN**, **LEFT JOIN**, **RIGHT JOIN**).
+2. **Subqueries:** Para consultas aninhadas e cálculos dinâmicos.
+3. **CTEs:** Para organizar e simplificar consultas complexas.
+4. **Views:** Para criar tabelas virtuais baseadas em consultas.
+5. **Criação de Tabelas:** Para armazenar resultados de análises de forma permanente.
+
+---
+
+## **Desafios de Negócio**
+
+A aula será guiada por dois desafios reais que abordam questões comuns no dia a dia de empresas. Esses desafios serão resolvidos com exemplos práticos, alinhando teoria e prática.
+
+### **Desafio 1: Produtos Mais Vendidos**
+**Objetivo:** Identificar os produtos mais vendidos por quantidade para otimizar estratégias de estoque e marketing.
+
+- **Técnicas Utilizadas:**
+  - **JOINs:** Para unir tabelas de vendas e produtos.
+  - **AGGREGATION:** Para calcular o total de vendas por produto.
+  - **ORDER BY e LIMIT:** Para identificar os produtos mais vendidos.
+
+---
+
+### **Desafio 2: Clientes Mais Lucrativos**
+**Objetivo:** Determinar os clientes que mais geraram receita para a empresa.
+
+- **Técnicas Utilizadas:**
+  - **JOINs:** Para combinar dados de vendas, produtos e clientes.
+  - **AGGREGATION:** Para calcular o total gasto por cliente.
+  - **ORDER BY e LIMIT:** Para listar os clientes com maior contribuição para o faturamento.
+
+---
+
+## **Objetivos da Aula**
+
+Ao final desta aula, você será capaz de:
+1. Entender como cada comando SQL se aplica a cenários reais.
+2. Resolver desafios de negócios utilizando SQL no Databricks.
+3. Explorar e manipular dados de forma eficiente para gerar insights acionáveis.
+4. Compreender como o SQL pode ser usado para trabalhar com grandes volumes de dados no Databricks.
 
 ---
 
@@ -125,26 +180,6 @@ O **SQL (Structured Query Language)** é a **linguagem universal de dados**. É 
 ### Conclusão
 
 Estudar Databricks e SQL é mais do que aprender novas ferramentas. É construir um conjunto de habilidades que o colocará no centro da revolução de dados que está transformando o mundo. Ao dominar essas tecnologias, você não apenas aumenta sua empregabilidade e potencial de ganhos, mas também se posiciona como um solucionador de problemas e inovador dentro de qualquer organização.
-
-Está pronto para dar esse próximo passo em sua carreira? Vamos começar! 🚀
-
----
-
-# Introdução ao Databricks: Um Curso para Quem Já Domina Excel
-
-Se você é um usuário experiente de Excel, já entende bem como organizar, analisar e manipular dados usando planilhas. Agora vamos dar um passo além, explorando o Databricks, uma plataforma poderosa e escalável para manipulação de grandes volumes de dados e execução de análises avançadas. Este curso vai ajudá-lo a compreender as principais diferenças entre as ferramentas, os conceitos fundamentais do Databricks e como ele funciona.
-
----
-
-## O Que é o Databricks?
-
-O **Databricks** é uma plataforma unificada de análise de dados e aprendizado de máquina, baseada no **Apache Spark**. Ele foi projetado para processar e analisar grandes volumes de dados de forma escalável, colaborativa e eficiente. Sua interface permite trabalhar com diferentes linguagens, como SQL, Python, Scala e R, integrando dados e análises avançadas em um único lugar.
-
-- **Principais Benefícios**:
-  - Capacidade de processar bilhões de registros.
-  - Suporte a **Data Lakes** e múltiplos formatos de dados (Parquet, Delta, CSV, etc.).
-  - Interface colaborativa, ideal para equipes.
-  - Integração com nuvens (Azure, AWS, Google Cloud).
 
 ---
 
@@ -665,45 +700,280 @@ Esses exemplos ilustram situações práticas no gerenciamento de dados de venda
 Esses JOINs ajudam a garantir a consistência e a completude dos dados, além de apoiar decisões baseadas em análises confiáveis e detalhadas. 🚀
 ---
 
-## **12. SUBQUERY** – **Consultas Aninhadas**
+## **12. SUBQUERY – Consultas Aninhadas**
 
-As **Subqueries** permitem usar o resultado de uma consulta dentro de outra.
+### **O que é uma Subquery?**
+Uma **Subquery** é uma consulta SQL dentro de outra consulta. O resultado da Subquery é usado como entrada para a consulta externa.
 
-### **Por que usar?**
-Para análises avançadas, como identificar produtos acima da média de preço.
+### **Por que usar Subquery?**
+- **Reutilização de consultas menores:** Uma Subquery permite usar os resultados de uma consulta diretamente dentro de outra.
+- **Simplificação de cálculos:** Reduz a necessidade de cálculos manuais.
+- **Análises avançadas:** Ideal para comparar um conjunto de dados com métricas agregadas, como médias ou totais.
 
-#### Exemplo: Produtos com preço acima da média
+### **Exemplo 1: Produtos com preço acima da média**
+Queremos encontrar todos os produtos cujo preço unitário esteja acima da média.
+
 ```sql
-SELECT * FROM produtos
+SELECT * 
+FROM produtos
 WHERE preco_unitario > (SELECT AVG(preco_unitario) FROM produtos);
 ```
-**Contexto de Negócio:** Identifique produtos premium.
+
+**Explicação:**
+1. A Subquery `(SELECT AVG(preco_unitario) FROM produtos)` calcula o preço médio de todos os produtos.
+2. A consulta externa compara cada `preco_unitario` com a média calculada na Subquery.
+
+#### **Resultado Esperado**
+| id_produto | nome_produto    | categoria       | preco_unitario |
+|------------|-----------------|-----------------|----------------|
+| 1          | Notebook Ultra  | Eletrônicos     | 3000.00        |
+| 2          | Smartphone Pro  | Eletrônicos     | 2000.00        |
 
 ---
 
-## **13. CTE** – **Tornando Consultas Mais Organizadas**
+### **Exemplo 2: Clientes com mais vendas do que a média**
+Queremos identificar clientes que realizaram mais compras do que a média de vendas por cliente.
 
-As **CTEs** simplificam consultas complexas, dividindo-as em partes mais gerenciáveis.
+```sql
+SELECT id_cliente, COUNT(*) AS total_vendas
+FROM vendas
+GROUP BY id_cliente
+HAVING COUNT(*) > (
+    SELECT AVG(total_vendas) 
+    FROM (
+        SELECT id_cliente, COUNT(*) AS total_vendas 
+        FROM vendas 
+        GROUP BY id_cliente
+    ) AS subquery
+);
+```
 
-### **Por que usar?**
-Para tornar análises complexas mais legíveis e reutilizáveis.
+**Explicação:**
+1. A Subquery interna calcula o número de vendas para cada cliente.
+2. A segunda Subquery calcula a média de vendas entre todos os clientes.
+3. A consulta externa filtra apenas os clientes com vendas acima da média.
 
-#### Exemplo: Produtos com preço acima da média usando CTE
+---
+
+## **13. CTE – Common Table Expressions**
+
+### **O que é uma CTE?**
+Uma **Common Table Expression (CTE)** é um bloco nomeado que armazena o resultado de uma consulta temporariamente, tornando consultas complexas mais organizadas e legíveis.
+
+### **Por que usar CTE?**
+- **Legibilidade:** Torna consultas longas mais fáceis de entender.
+- **Reutilização:** Permite usar o mesmo resultado em várias partes de uma consulta.
+- **Modularidade:** Divide consultas complexas em partes menores.
+
+---
+
+### **Exemplo 1: Produtos com preço acima da média usando CTE**
+
 ```sql
 WITH preco_medio AS (
-    SELECT AVG(preco_unitario) AS media_precos FROM produtos
+    SELECT AVG(preco_unitario) AS media_precos
+    FROM produtos
 )
-SELECT * FROM produtos
+SELECT * 
+FROM produtos
 WHERE preco_unitario > (SELECT media_precos FROM preco_medio);
 ```
-**Contexto de Negócio:** Torne sua análise mais clara e colaborativa.
+
+**Explicação:**
+1. A CTE `preco_medio` calcula a média dos preços dos produtos.
+2. A consulta principal utiliza o valor calculado para filtrar os produtos com preço acima da média.
+
+---
+
+### **Exemplo 2: Análise de vendas por cliente usando CTE**
+
+```sql
+WITH vendas_por_cliente AS (
+    SELECT id_cliente, COUNT(*) AS total_vendas
+    FROM vendas
+    GROUP BY id_cliente
+)
+SELECT * 
+FROM vendas_por_cliente
+WHERE total_vendas > (
+    SELECT AVG(total_vendas) 
+    FROM vendas_por_cliente
+);
+```
+
+**Explicação:**
+1. A CTE `vendas_por_cliente` calcula o número de vendas para cada cliente.
+2. A consulta principal filtra os clientes que realizaram mais vendas do que a média calculada.
+
+---
+
+### **Comparação: Subquery vs CTE**
+| **Critério**             | **Subquery**                              | **CTE**                                   |
+|--------------------------|-------------------------------------------|-------------------------------------------|
+| **Legibilidade**         | Menos legível em consultas complexas.     | Mais organizado e fácil de entender.      |
+| **Reutilização**         | Não reutilizável em várias partes.        | Pode ser reutilizada na consulta principal. |
+| **Desempenho**           | Similar em desempenho.                   | Similar em desempenho.                    |
+| **Uso Ideal**            | Consultas simples ou isoladas.           | Consultas complexas com múltiplas etapas. |
+
+---
+
+## **14. VIEW – Consultas Reutilizáveis**
+
+### **O que é uma VIEW?**
+Uma **VIEW** é uma tabela virtual baseada em uma consulta SQL. Ela não armazena dados, mas executa a consulta subjacente sempre que é usada.
+
+### **Por que usar VIEW?**
+- **Reutilização de lógica:** Permite salvar consultas frequentes.
+- **Simplificação:** Reduz a complexidade para os usuários finais.
+- **Segurança:** Restringe o acesso a dados sensíveis.
+
+---
+
+### **Exemplo 1: Criando uma VIEW de vendas por cliente**
+
+```sql
+CREATE VIEW vendas_por_cliente AS
+SELECT id_cliente, COUNT(*) AS total_vendas, SUM(quantidade) AS total_quantidade
+FROM vendas
+GROUP BY id_cliente;
+```
+
+### **Consultando a VIEW**
+
+```sql
+SELECT * FROM vendas_por_cliente
+WHERE total_vendas > 10;
+```
+
+---
+
+### **15. Criação de Tabelas**
+
+Além de consultas, você pode criar novas tabelas para armazenar resultados.
+
+### **Exemplo 1: Criando uma tabela com vendas agregadas**
+
+```sql
+CREATE TABLE vendas_agregadas AS
+SELECT id_cliente, COUNT(*) AS total_vendas, SUM(quantidade) AS total_quantidade
+FROM vendas
+GROUP BY id_cliente;
+```
+
+---
+
+### **Quando usar Subqueries, CTEs, Views ou Tabelas?**
+| **Ferramenta** | **Uso Ideal**                                                             |
+|----------------|---------------------------------------------------------------------------|
+| **Subquery**   | Para consultas isoladas e cálculos diretos.                               |
+| **CTE**        | Para dividir e organizar consultas complexas.                            |
+| **VIEW**       | Para reutilizar consultas frequentes em diferentes contextos.            |
+| **Tabela**     | Para armazenar resultados permanentes ou intermediários para análises.   |
+
+Essas ferramentas são cruciais para manipular e estruturar dados de forma eficiente, especialmente em análises complexas.
 
 ---
 
 ## **Desafios de Negócio**
 
-1. **Produtos Mais Vendidos:** Identificar os produtos mais vendidos por quantidade.
-2. **Mês com Maior Faturamento:** Determinar o período mais lucrativo.
-3. **Clientes Mais Lucrativos:** Descobrir os clientes que mais gastam.
+### **Desafios de Negócio**
 
-Cada desafio pode ser ajustado para se alinhar às necessidades específicas do negócio. 🚀
+1. **Produtos Mais Vendidos:** Identificar os produtos mais vendidos em termos de quantidade.
+2. **Clientes Mais Lucrativos:** Determinar os clientes que mais gastaram.
+
+Cada desafio será detalhado com o código SQL, o raciocínio por trás da solução, e o contexto de aplicação no negócio.
+
+---
+
+## **1. Produtos Mais Vendidos**
+
+### **Objetivo de Negócio**
+Queremos identificar os produtos mais vendidos para entender quais itens têm maior saída e, possivelmente, quais devem receber mais foco em estoque ou marketing.
+
+### **Query**
+```sql
+SELECT 
+    p.id_produto, 
+    p.nome_produto, 
+    SUM(v.quantidade) AS total_quantidade
+FROM vendas v
+INNER JOIN produtos p ON v.id_produto = p.id_produto
+GROUP BY p.id_produto, p.nome_produto
+ORDER BY total_quantidade DESC
+LIMIT 10;
+```
+
+### **Explicação do Código**
+1. **`INNER JOIN produtos p ON v.id_produto = p.id_produto`**: Relaciona as tabelas `vendas` e `produtos` para trazer os nomes dos produtos vendidos.
+2. **`SUM(v.quantidade)`**: Calcula a quantidade total vendida para cada produto.
+3. **`GROUP BY p.id_produto, p.nome_produto`**: Agrupa os resultados por produto para calcular os totais de cada item.
+4. **`ORDER BY total_quantidade DESC`**: Ordena os produtos mais vendidos no topo.
+5. **`LIMIT 10`**: Retorna apenas os 10 produtos mais vendidos.
+
+---
+
+### **Exemplo de Resultado**
+| id_produto | nome_produto       | total_quantidade |
+|------------|--------------------|------------------|
+| 5          | Smartphone Pro     | 500              |
+| 12         | Notebook Ultra     | 450              |
+| 8          | Cadeira Ergonômica | 350              |
+
+---
+
+### **Contexto de Aplicação**
+- **Marketing:** Priorizar produtos mais vendidos em campanhas promocionais.
+- **Estoque:** Garantir que esses produtos estejam disponíveis para evitar rupturas.
+- **Vendas:** Identificar tendências e ajustar o mix de produtos.
+
+---
+
+## **2. Clientes Mais Lucrativos**
+
+### **Objetivo de Negócio**
+Queremos descobrir quais clientes geraram mais receita para a empresa, permitindo que ações personalizadas sejam criadas para fidelizar ou recompensar esses clientes.
+
+### **Query**
+```sql
+SELECT 
+    v.id_cliente, 
+    c.primeiro_nome, 
+    c.ultimo_nome, 
+    SUM(v.quantidade * p.preco_unitario) AS total_gasto
+FROM vendas v
+INNER JOIN produtos p ON v.id_produto = p.id_produto
+INNER JOIN clientes c ON v.id_cliente = c.id_cliente
+GROUP BY v.id_cliente, c.primeiro_nome, c.ultimo_nome
+ORDER BY total_gasto DESC
+LIMIT 10;
+```
+
+---
+
+### **Explicação do Código**
+1. **`INNER JOIN produtos p ON v.id_produto = p.id_produto`**: Relaciona as tabelas `vendas` e `produtos` para calcular o valor de cada venda.
+2. **`INNER JOIN clientes c ON v.id_cliente = c.id_cliente`**: Adiciona informações dos clientes às vendas.
+3. **`SUM(v.quantidade * p.preco_unitario)`**: Calcula o total gasto por cada cliente.
+4. **`GROUP BY v.id_cliente, c.primeiro_nome, c.ultimo_nome`**: Agrupa os resultados por cliente para calcular os totais de cada um.
+5. **`ORDER BY total_gasto DESC`**: Ordena os clientes mais lucrativos no topo.
+6. **`LIMIT 10`**: Retorna apenas os 10 clientes mais lucrativos.
+
+---
+
+### **Exemplo de Resultado**
+| id_cliente | primeiro_nome | ultimo_nome | total_gasto |
+|------------|---------------|-------------|-------------|
+| 101        | Ana           | Souza       | 15,000.00   |
+| 202        | João          | Silva       | 12,500.00   |
+| 303        | Maria         | Oliveira    | 10,000.00   |
+
+---
+
+### **Contexto de Aplicação**
+- **Fidelização:** Criar programas de benefícios exclusivos para clientes mais lucrativos.
+- **Segmentação:** Identificar padrões de consumo e criar campanhas direcionadas.
+- **Insights de Negócio:** Entender o comportamento de compra dos principais clientes.
+
+---
+
+Esses dois desafios cobrem aspectos cruciais do negócio: identificar os produtos que movimentam o estoque e os clientes que mais contribuem para a receita. Eles ajudam a embasar estratégias em dados concretos, promovendo ações mais eficazes e direcionadas.
