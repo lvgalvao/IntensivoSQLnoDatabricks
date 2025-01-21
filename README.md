@@ -15,38 +15,21 @@ Nesta aula, exploraremos como usar comandos SQL no Databricks para resolver desa
 4. **GROUP BY e HAVING:** Para agrupar e filtrar dados agregados.
 5. **ORDER BY:** Para ordenar os resultados.
 6. **LIMIT:** Para restringir o número de linhas no resultado.
-
-### **Comandos Avançados**
-1. **JOINs:** Para combinar dados de tabelas relacionadas (**INNER JOIN**, **LEFT JOIN**, **RIGHT JOIN**).
-2. **Subqueries:** Para consultas aninhadas e cálculos dinâmicos.
-3. **CTEs:** Para organizar e simplificar consultas complexas.
-4. **Views:** Para criar tabelas virtuais baseadas em consultas.
-5. **Criação de Tabelas:** Para armazenar resultados de análises de forma permanente.
+7. **JOINs:** Para combinar dados de tabelas relacionadas (**INNER JOIN**, **LEFT JOIN**, **RIGHT JOIN**).
+8. **Subqueries:** Para consultas aninhadas e cálculos dinâmicos.
+9. **CTEs:** Para organizar e simplificar consultas complexas.
+10. **Views:** Para criar tabelas virtuais baseadas em consultas.
+11. **Criação de Tabelas:** Para armazenar resultados de análises de forma permanente.
 
 ---
 
 ## **Desafios de Negócio**
 
-A aula será guiada por dois desafios reais que abordam questões comuns no dia a dia de empresas. Esses desafios serão resolvidos com exemplos práticos, alinhando teoria e prática.
-
 ### **Desafio 1: Produtos Mais Vendidos**
-**Objetivo:** Identificar os produtos mais vendidos por quantidade para otimizar estratégias de estoque e marketing.
-
-- **Técnicas Utilizadas:**
-  - **JOINs:** Para unir tabelas de vendas e produtos.
-  - **AGGREGATION:** Para calcular o total de vendas por produto.
-  - **ORDER BY e LIMIT:** Para identificar os produtos mais vendidos.
-
----
+**Objetivo:** Identificar os produtos mais vendidos por quantidade para otimizar estratégias de estoque e marketing..
 
 ### **Desafio 2: Clientes Mais Lucrativos**
 **Objetivo:** Determinar os clientes que mais geraram receita para a empresa.
-
-- **Técnicas Utilizadas:**
-  - **JOINs:** Para combinar dados de vendas, produtos e clientes.
-  - **AGGREGATION:** Para calcular o total gasto por cliente.
-  - **ORDER BY e LIMIT:** Para listar os clientes com maior contribuição para o faturamento.
-
 ---
 
 ## **Objetivos da Aula**
@@ -83,103 +66,6 @@ Aqui estão alguns recursos para complementar seus estudos:
 - **Comunidade:**  
   [Databricks Community Edition](https://community.databricks.com/)  
   Participe da comunidade e use a versão gratuita do Databricks para praticar.
-
----
-
-### Por Que Estudar Databricks e SQL? 
-
-Em um mundo onde os dados são o novo petróleo, dominar ferramentas e linguagens que permitem extrair, transformar e analisar esses dados é essencial para qualquer profissional que deseja se destacar. Estudar **Databricks** e **SQL** não é apenas aprender uma nova ferramenta ou linguagem, mas também investir na sua carreira, abrindo portas para oportunidades em setores de tecnologia, negócios e inovação.
-
----
-
-### 1. **O Papel dos Dados na Economia Moderna**
-
-Vivemos na era da **transformação digital**, onde quase tudo que fazemos gera dados: compras online, redes sociais, sensores IoT, transações bancárias, entre outros. Empresas que conseguem analisar esses dados têm uma vantagem competitiva significativa. Elas podem:
-
-- **Entender o comportamento do consumidor**.
-- **Otimizar processos internos**.
-- **Antecipar tendências de mercado**.
-- **Aumentar a eficiência operacional**.
-
-O Databricks e o SQL são ferramentas fundamentais para capturar, processar e tirar insights desses dados.
-
----
-
-### 2. **Por Que Estudar Databricks?**
-
-O **Databricks** é uma plataforma que combina o melhor de dois mundos: **manipulação de grandes volumes de dados** e **análise avançada**. Ele se destaca por sua escalabilidade, eficiência e facilidade de uso. 
-
-#### **Vantagens de Estudar Databricks:**
-
-- **Dominar Big Data:** Você aprende a trabalhar com bilhões de linhas de dados, algo impossível em ferramentas tradicionais como o Excel.
-- **Facilidade de Integração:** O Databricks integra-se facilmente a plataformas de nuvem como Azure, AWS e Google Cloud.
-- **Habilidades Valorizadas no Mercado:** Empresas líderes como Amazon, Netflix e Uber usam o Databricks para gerenciar seus dados.
-- **Preparação para o Futuro:** Ele suporta inteligência artificial e aprendizado de máquina, áreas que estão em rápida ascensão.
-
----
-
-### 3. **Por Que Estudar SQL?**
-
-O **SQL (Structured Query Language)** é a **linguagem universal de dados**. É a porta de entrada para quem deseja trabalhar com bancos de dados relacionais e até mesmo com tecnologias modernas como Databricks e Apache Spark.
-
-#### **Razões para Aprender SQL:**
-
-- **Base de Dados Universais:** SQL é usado para acessar e manipular bancos de dados em todos os setores.
-- **Ampla Aplicabilidade:** De analistas de dados a desenvolvedores e engenheiros de dados, quase todas as profissões técnicas usam SQL.
-- **Simples e Poderoso:** É fácil de aprender, mas extremamente versátil, permitindo desde consultas simples até análises complexas.
-- **Alta Demanda no Mercado:** Profissionais que dominam SQL estão sempre em alta demanda. Ele é uma habilidade essencial em muitos anúncios de vagas de emprego.
-
----
-
-### 4. **Como Essas Habilidades Valorizam o Profissional**
-
-#### **1. Você se Torna Mais Competitivo**
-
-- O mercado de trabalho está saturado de profissionais que sabem usar Excel, mas há menos pessoas capacitadas em Databricks e SQL.
-- Empresas procuram profissionais capazes de lidar com grandes volumes de dados e transformar números em insights acionáveis.
-
-#### **2. Você Alcança Melhores Salários**
-
-- Profissionais de dados, como analistas e engenheiros de dados, estão entre os mais bem pagos no mercado.
-- Segundo relatórios de mercado, habilidades em SQL e Big Data aumentam o salário médio em até 30%.
-
-#### **3. Você Amplia Sua Versatilidade**
-
-- Com Databricks e SQL, você pode trabalhar em diversos setores, como tecnologia, saúde, finanças, varejo e indústria.
-- Essas habilidades são demandadas em startups, grandes corporações e empresas globais.
-
-#### **4. Você Fica Pronto para o Futuro**
-
-- A análise de dados é o futuro. Profissionais que entendem como gerenciar e explorar dados têm papel estratégico nas organizações.
-- Dominar Databricks e SQL prepara você para áreas emergentes, como inteligência artificial, aprendizado de máquina e engenharia de dados.
-
----
-
-### 5. **Exemplo de Impacto no Trabalho**
-
-#### Antes (Com Excel):
-- Um analista de dados precisava analisar vendas de um ano. O arquivo tinha 1 milhão de linhas e era pesado demais para abrir no Excel.
-- A solução era dividir os dados em vários arquivos menores, perdendo eficiência e aumentando o risco de erros.
-
-#### Depois (Com Databricks e SQL):
-- O mesmo analista carrega os dados diretamente no Databricks.
-- Com algumas linhas de SQL, ele filtra, agrupa e analisa bilhões de registros em minutos.
-- O resultado? Economia de tempo, mais precisão e maior impacto nos negócios.
-
----
-
-### 6. **O Que Você Ganha ao Estudar Databricks e SQL**
-
-- **Acesso a Dados em Grande Escala:** Você será capaz de trabalhar com dados de qualquer tamanho, algo que antes parecia impossível.
-- **Ferramentas Poderosas:** Databricks e SQL permitem análises mais rápidas e detalhadas do que o Excel.
-- **Habilidades de Destaque:** Poucos profissionais realmente dominam Big Data e SQL, o que faz de você um recurso valioso.
-- **Impacto Estratégico:** Você não será apenas alguém que analisa dados, mas um profissional que transforma dados em decisões estratégicas.
-
----
-
-### Conclusão
-
-Estudar Databricks e SQL é mais do que aprender novas ferramentas. É construir um conjunto de habilidades que o colocará no centro da revolução de dados que está transformando o mundo. Ao dominar essas tecnologias, você não apenas aumenta sua empregabilidade e potencial de ganhos, mas também se posiciona como um solucionador de problemas e inovador dentro de qualquer organização.
 
 ---
 
@@ -265,19 +151,6 @@ No Excel, abrir um arquivo com 2 milhões de linhas pode travar o computador. No
 1. Você pode carregar esses dados em uma tabela sem problemas.
 2. Consultar apenas os dados necessários usando SQL.
 3. Realizar análises em segundos, independentemente do volume.
-
----
-
-## Resumo
-
-O Databricks é uma evolução natural para quem já domina Excel e deseja trabalhar com:
-- **Grandes volumes de dados**.
-- **Análises colaborativas**.
-- **Automação e escalabilidade**.
-
-Ao longo deste curso, vamos explorar como migrar seus conhecimentos do Excel para o Databricks e aproveitar todo o poder dessa plataforma para análise de dados moderna.
-
-Pronto para começar? 🚀
 
 ---
 
