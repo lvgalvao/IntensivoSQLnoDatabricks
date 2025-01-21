@@ -296,333 +296,419 @@ Este guia detalhado aborda os comandos SQL mais importantes, desde os mais bási
 
 ---
 
-## **Comandos Fundamentais**
+# Guia Detalhado de Comandos SQL com Contexto de Negócio
 
-### **1. SELECT**
+Este guia detalhado explora os comandos SQL mais usados, abordando como aplicá-los em cenários reais de negócios. A proposta é fornecer não apenas exemplos de uso técnico, mas também o contexto em que cada comando pode ser útil para análises estratégicas e operacionais.
 
-O comando **SELECT** é usado para recuperar dados de uma tabela. Ele é o ponto de partida para qualquer consulta em SQL.
+---
+
+## **1. SELECT** – **O Ponto de Partida**
+
+O comando **SELECT** é usado para recuperar dados de uma ou mais tabelas, sendo essencial para começar qualquer consulta.
+
+### **Por que usar?**
+Você quer visualizar dados brutos ou criar relatórios baseados em colunas específicas. Isso é útil, por exemplo, para extrair informações de vendas, produtos ou clientes.
+
+### **Exemplo de Negócio:**
+Você precisa verificar o preço e o nome de todos os produtos disponíveis para otimizar sua estratégia de precificação.
 
 #### Exemplo 1: Selecionar todas as colunas
 ```sql
-SELECT * FROM vendas;
+SELECT * FROM produtos;
 ```
-No Excel: Isso seria como visualizar toda a planilha de vendas.
+**Contexto de Negócio:** Visualize todos os detalhes de produtos, como ID, nome, categoria e preço unitário. Isso é útil para uma revisão geral ou para verificar a integridade do banco de dados.
 
 #### Exemplo 2: Selecionar colunas específicas
 ```sql
-SELECT id_venda, data_venda, valor_venda FROM vendas;
+SELECT id_produto, nome_produto, preco_unitario FROM produtos;
 ```
-No Excel: É como ocultar todas as colunas, exceto as desejadas.
-
-### **Selecionar o Mínimo Necessário de Dados**
-
-Uma boa prática em SQL, especialmente em ambientes de alto desempenho como o **Databricks**, é **trazer apenas os dados necessários** em suas consultas. Isso não apenas melhora a performance, mas também reduz o uso de recursos como memória e processamento, além de minimizar os custos, especialmente em soluções baseadas na nuvem.
+**Contexto de Negócio:** Exiba apenas as informações relevantes, como o nome e o preço dos produtos, ignorando detalhes como estoque ou categoria.
 
 ---
 
-#### **Exemplo 1: Evite usar `SELECT *`**
-```sql
-SELECT * FROM vendas;
-```
-- **Problema:** Esse comando traz **todas as colunas e todas as linhas** da tabela, independentemente de serem ou não necessárias para a análise.
-- **Impacto:**
-  - **Desempenho:** Maior tempo de execução devido ao volume de dados transferidos.
-  - **Memória:** Consumo desnecessário de recursos no servidor e no cliente.
-  - **Custos:** Em serviços na nuvem, como o Databricks, pode aumentar os custos ao processar grandes volumes de dados.
+## **2. FROM** – **De Onde os Dados Vêm**
 
-No Excel: Isso seria como abrir uma planilha inteira de milhares de linhas e colunas, mesmo quando você precisa apenas de algumas células.
+O comando **FROM** define a origem dos dados. Toda consulta começa referenciando uma tabela ou um conjunto de tabelas.
 
----
-
-#### **Exemplo 2: Especifique as colunas necessárias**
-```sql
-SELECT id_venda, data_venda, valor_venda FROM vendas;
-```
-- **Por que é melhor?**
-  - Reduz a quantidade de dados transferidos para apenas o essencial.
-  - Melhora a performance da consulta, pois o banco de dados precisa ler e enviar menos informações.
-  - Facilita o entendimento do objetivo da consulta, já que apenas as colunas relevantes estão listadas.
-
-No Excel: É como ocultar as colunas que você não está analisando e trabalhar apenas com as informações que importam.
-
----
-
-### **Recomendações Práticas**
-1. **Evite `SELECT *` a menos que seja absolutamente necessário**:
-   - Use apenas para inspeções rápidas durante o desenvolvimento, nunca em produção.
-   
-2. **Sempre liste explicitamente as colunas que você precisa**:
-   - Isso ajuda a garantir que você está acessando apenas os dados relevantes.
-
-3. **Pense no impacto em ambientes distribuídos**:
-   - No Databricks, tabelas podem estar armazenadas em formatos como **Parquet** ou **Delta**, otimizados para leitura seletiva de colunas. Quando você especifica as colunas necessárias, o Databricks carrega apenas os blocos correspondentes, economizando tempo e recursos.
-
-4. **Documentação e Manutenção**:
-   - Consultas com colunas explícitas são mais fáceis de entender e manter no futuro. `SELECT *` pode causar problemas se a estrutura da tabela mudar (ex.: uma nova coluna irrelevante para sua análise pode ser carregada sem necessidade).
-
----
-
-**Resumo:** Sempre que possível, **liste as colunas explicitamente** para manter suas consultas eficientes, econômicas e claras. A prática de evitar `SELECT *` é essencial para se destacar como um profissional que compreende as necessidades de desempenho e custo em ambientes modernos como o Databricks.
-
----
-
-### **2. DISTINCT**
-
-O **DISTINCT** é usado para retornar valores únicos de uma ou mais colunas, eliminando duplicatas.
-
-#### Exemplo 1: Listar todas as cidades únicas dos clientes
-```sql
-SELECT DISTINCT cidade FROM clientes;
-```
-No Excel: Isso seria como usar "Remover Duplicatas" na coluna "Cidade".
-
-#### Exemplo 2: Listar combinações únicas de cidade e idade
-```sql
-SELECT DISTINCT cidade, idade FROM clientes;
-```
-No Excel: É como usar uma tabela dinâmica para exibir combinações únicas.
-
----
-
-### **3. FROM**
-
-O comando **FROM** especifica a tabela de onde os dados serão extraídos.
+### **Por que usar?**
+Sem o **FROM**, o SQL não sabe de onde buscar os dados. Pense nele como escolher uma planilha específica no Excel.
 
 #### Exemplo: Selecionar dados da tabela `produtos`
 ```sql
 SELECT * FROM produtos;
 ```
-No Excel: É como escolher uma aba ou planilha para trabalhar.
+**Contexto de Negócio:** Analisar os dados completos de uma tabela, como produtos ou clientes, antes de iniciar uma análise detalhada.
 
 ---
 
-### **4. WHERE**
+## **3. COUNT** – **Quantificar os Dados**
 
-A cláusula **WHERE** filtra os dados com base em condições, semelhante ao uso de filtros no Excel.
+O comando **COUNT** é usado para contar o número de linhas em um conjunto de dados ou resultado de consulta.
 
-#### Exemplo 1: Selecionar vendas acima de R$100
+### **Por que usar?**
+Você quer entender o volume de dados, como a quantidade de vendas realizadas, clientes cadastrados ou produtos disponíveis.
+
+#### Exemplo 1: Contar o total de produtos cadastrados
 ```sql
-SELECT * FROM vendas WHERE valor_venda > 100;
+SELECT COUNT(*) AS total_produtos FROM produtos;
 ```
-No Excel: Aplicar um filtro na coluna "Valor Venda" para mostrar valores maiores que 100.
-
-#### Exemplo 2: Selecionar clientes de São Paulo
-```sql
-SELECT * FROM clientes WHERE cidade = 'São Paulo';
-```
-No Excel: Aplicar um filtro para exibir apenas linhas onde "Cidade" é igual a "São Paulo".
+**Contexto de Negócio:** Determine quantos produtos você tem em seu portfólio para avaliar a diversidade da oferta.
 
 ---
 
-### **5. LIMIT**
+## **4. DISTINCT** – **Removendo Duplicatas**
 
-O comando **LIMIT** restringe o número de linhas retornadas por uma consulta.
+O comando **DISTINCT** retorna valores únicos em uma ou mais colunas, ajudando a evitar duplicatas nos resultados.
 
-#### Exemplo 1: Selecionar as 5 primeiras linhas
+### **Por que usar?**
+Quando você precisa identificar elementos únicos, como categorias de produtos, cidades de clientes ou métodos de pagamento.
+
+#### Exemplo 1: Listar todas as categorias de produtos
 ```sql
-SELECT * FROM vendas LIMIT 5;
+SELECT DISTINCT categoria FROM produtos;
 ```
-No Excel: Seria como visualizar as 5 primeiras linhas de uma planilha.
+**Contexto de Negócio:** Veja todas as categorias de produtos para avaliar a segmentação do portfólio.
 
-#### Exemplo 2: Selecionar as 10 vendas de maior valor
+#### Exemplo 2: Listar combinações únicas de categoria e preço
 ```sql
-SELECT * FROM vendas ORDER BY valor_venda DESC LIMIT 10;
+SELECT DISTINCT categoria, preco_unitario FROM produtos;
 ```
-No Excel: Ordenar a coluna "Valor Venda" de forma decrescente e selecionar as 10 primeiras linhas.
-
-#### Exemplo 3: Paginação com `LIMIT` e `OFFSET`
-```sql
-SELECT * FROM vendas ORDER BY data_venda ASC LIMIT 10 OFFSET 5;
-```
-No Excel: Ignorar as 5 primeiras linhas e começar a análise a partir da 6ª.
+**Contexto de Negócio:** Analise como os preços estão distribuídos por categoria.
 
 ---
 
-### **6. COUNT**
+## **5. WHERE** – **Filtrando os Dados**
 
-O comando **COUNT** retorna o número de linhas em um conjunto de dados.
+A cláusula **WHERE** é usada para filtrar registros com base em condições específicas.
 
-#### Exemplo 1: Contar o total de vendas
+### **Por que usar?**
+Para buscar dados que atendam a critérios específicos, como produtos acima de um certo preço ou vendas em uma determinada data.
+
+#### Exemplo 1: Produtos com preço maior que R$100
 ```sql
-SELECT COUNT(*) AS total_vendas FROM vendas;
+SELECT * FROM produtos WHERE preco_unitario > 100;
 ```
-No Excel: Usar a função `CONT.VALORES` para contar todas as linhas preenchidas.
+**Contexto de Negócio:** Identifique produtos premium para estratégias de marketing focadas em alta margem.
 
-#### Exemplo 2: Contar clientes únicos por cidade
+#### Exemplo 2: Produtos da categoria "Eletrônicos"
 ```sql
-SELECT cidade, COUNT(*) AS total_clientes FROM clientes GROUP BY cidade;
+SELECT * FROM produtos WHERE categoria = 'Eletrônicos';
 ```
-No Excel: Criar uma tabela dinâmica que conta o número de clientes em cada cidade.
+**Contexto de Negócio:** Analise produtos eletrônicos para planejar promoções sazonais.
+
+#### Exemplo 3: Contar produtos de uma categoria específica
+```sql
+SELECT COUNT(*) AS total_eletronicos FROM produtos WHERE categoria = 'Eletrônicos';
+```
+**Contexto de Negócio:** Identifique o número de produtos na categoria "Eletrônicos" para entender o tamanho desse segmento.
 
 ---
 
-### **7. ORDER BY**
+## **6. LIMIT** – **Restringindo o Volume de Dados**
 
-A cláusula **ORDER BY** organiza os resultados em ordem crescente ou decrescente.
+O **LIMIT** restringe o número de linhas retornadas pela consulta, ajudando a focar em uma amostra específica.
 
-#### Exemplo 1: Ordenar vendas por valor (decrescente)
+### **Por que usar?**
+Para reduzir o volume de dados analisados inicialmente ou criar relatórios com os principais resultados.
+
+#### Exemplo: Selecionar os 5
 ```sql
-SELECT * FROM vendas ORDER BY valor_venda DESC;
+SELECT * FROM produtos LIMIT 5;
 ```
-No Excel: Classificar a coluna "Valor Venda" de maior para menor.
-
-#### Exemplo 2: Ordenar clientes por cidade e idade
-```sql
-SELECT * FROM clientes ORDER BY cidade ASC, idade DESC;
-```
-No Excel: Aplicar uma classificação que organiza primeiro por "Cidade" e depois por "Idade".
+**Contexto de Negócio:** Identifique 5 produtos.
 
 ---
 
-### **8. BETWEEN**
+## **7. ORDER BY** – **Organizando os Resultados**
 
-O **BETWEEN** filtra valores dentro de um intervalo.
+A cláusula **ORDER BY** organiza os resultados com base em uma ou mais colunas.
 
-#### Exemplo 1: Selecionar vendas entre R$50 e R$200
+### **Por que usar?**
+Para visualizar os dados de forma ordenada, facilitando a identificação de padrões, como produtos mais baratos ou clientes mais ativos.
+
+#### Exemplo 1: Ordenar produtos por preço (crescente)
 ```sql
-SELECT * FROM vendas WHERE valor_venda BETWEEN 50 AND 200;
+SELECT * FROM produtos ORDER BY preco_unitario ASC;
 ```
-No Excel: Aplicar um filtro para exibir apenas valores dentro de um intervalo.
+**Contexto de Negócio:** Identifique produtos mais acessíveis para estratégias de vendas baseadas em preço.
 
-#### Exemplo 2: Selecionar produtos com preços entre R$100 e R$500
+#### Exemplo 2: Ordenar produtos por categoria e preço (decrescente)
 ```sql
-SELECT * FROM produtos WHERE preco_unitario BETWEEN 100 AND 500;
+SELECT * FROM produtos ORDER BY categoria, preco_unitario DESC;
 ```
+**Contexto de Negócio:** Analise os preços dentro de cada categoria para identificar padrões ou anomalias.
+
+#### Exemplo 3: Selecionar os 5 produtos mais caros
+```sql
+SELECT * FROM produtos ORDER BY preco_unitario DESC LIMIT 5;
+```
+**Contexto de Negócio:** Identifique os produtos de maior valor para campanhas exclusivas ou análises de rentabilidade.
 
 ---
 
-### **9. IN**
+## **8. MIN, MAX, SUM, AVG** – **Resumo de Dados Numéricos**
 
-O **IN** verifica se um valor está dentro de uma lista específica.
+Essas funções agregadas ajudam a calcular estatísticas como o menor valor, maior valor, soma e média.
 
-#### Exemplo 1: Selecionar vendas feitas por clientes específicos
+### **Por que usar?**
+Para obter uma visão consolidada dos dados numéricos, como preço médio, valor total vendido ou produto mais caro.
+
+#### Exemplo 1: Menor e maior preço de produtos
 ```sql
-SELECT * FROM vendas WHERE id_cliente IN (1, 2, 3);
+SELECT MIN(preco_unitario) AS menor_preco, MAX(preco_unitario) AS maior_preco FROM produtos;
 ```
-No Excel: Aplicar um filtro para exibir apenas vendas associadas aos IDs 1, 2 ou 3.
+**Contexto de Negócio:** Avalie a amplitude de preços no portfólio.
 
-#### Exemplo 2: Selecionar produtos de categorias específicas
-```sql
-SELECT * FROM produtos WHERE categoria IN ('Eletrônicos', 'Roupas');
-```
-
----
-
-### **10. LIKE**
-
-O **LIKE** é usado para buscar valores que seguem um padrão específico.
-
-#### Exemplo 1: Clientes cujo nome começa com "A"
-```sql
-SELECT * FROM clientes WHERE primeiro_nome LIKE 'A%';
-```
-No Excel: Aplicar um filtro para mostrar nomes que começam com "A".
-
-#### Exemplo 2: Produtos que terminam com "s"
-```sql
-SELECT * FROM produtos WHERE nome_produto LIKE '%s';
-```
-
----
-
-### **11. MIN, MAX, SUM, AVG**
-
-Essas funções agregadas calculam o menor, maior, soma e média de valores em uma coluna.
-
-#### Exemplo 1: Menor e maior valor de venda
-```sql
-SELECT MIN(valor_venda) AS menor_venda, MAX(valor_venda) AS maior_venda FROM vendas;
-```
-
-#### Exemplo 2: Soma e média de preços de produtos
+#### Exemplo 2: Soma e média dos preços de produtos
 ```sql
 SELECT SUM(preco_unitario) AS soma_precos, AVG(preco_unitario) AS media_precos FROM produtos;
 ```
+**Contexto de Negócio:** Entenda o valor médio e total dos produtos disponíveis.
 
 ---
 
-### **12. GROUP BY**
+## **9. GROUP BY** – **Agrupando Dados**
 
-O **GROUP BY** agrupa os dados em categorias para aplicar funções agregadas.
+O **GROUP BY** agrupa registros para aplicar funções agregadas.
 
-#### Exemplo 1: Total de vendas por cliente
-```sql
-SELECT id_cliente, SUM(valor_venda) AS total_vendas FROM vendas GROUP BY id_cliente;
-```
+### **Por que usar?**
+Para criar relatórios baseados em categorias ou segmentos, como vendas por cidade ou preços médios por categoria.
 
-#### Exemplo 2: Preço médio por categoria
+#### Exemplo: Preço médio por categoria
 ```sql
 SELECT categoria, AVG(preco_unitario) AS media_precos FROM produtos GROUP BY categoria;
 ```
+**Contexto de Negócio:** Compare categorias de produtos com base em seu preço médio.
 
 ---
 
-### **13. HAVING**
+## **10. HAVING** – **Filtrando Grupos**
 
-O **HAVING** filtra grupos criados com `GROUP BY`.
+A cláusula **HAVING** filtra grupos criados com **GROUP BY**.
 
-#### Exemplo 1: Categorias com preço médio acima de R$100
+### **Por que usar?**
+Quando você precisa aplicar filtros após a agregação dos dados.
+
+#### Exemplo: Categorias com preço médio acima de R$100
 ```sql
 SELECT categoria, AVG(preco_unitario) AS media_precos
 FROM produtos
 GROUP BY categoria
 HAVING AVG(preco_unitario) > 100;
 ```
+**Contexto de Negócio:** Foco em categorias premium para estratégias de alta margem.
 
 ---
 
-### **14. JOIN**
+## **11. JOIN** – **Combinando Tabelas**
 
-Os **JOINs** combinam dados de duas ou mais tabelas com base em uma relação comum.
+Os **JOINs** são uma das partes mais importantes do SQL, usados para combinar dados de duas ou mais tabelas. Isso é essencial em bancos de dados relacionais, onde as informações estão distribuídas em várias tabelas. Este guia detalha os diferentes tipos de JOIN, com explicações práticas, comparações com Excel e exemplos.
 
-#### INNER JOIN
+---
+
+## **Módulo de JOIN: INNER, LEFT e RIGHT**
+
+Os comandos de **JOIN** são essenciais para combinar tabelas em SQL. Eles permitem unir informações de diferentes tabelas com base em uma relação lógica, geralmente definida por uma chave comum, como `id_produto`.
+
+### **1. O que é JOIN?**
+
+**JOIN** conecta duas ou mais tabelas e retorna dados combinados. Dependendo do tipo de JOIN, podemos incluir:
+- Somente os registros que têm correspondência em ambas as tabelas (**INNER JOIN**).
+- Todos os registros de uma tabela, mesmo sem correspondência na outra (**LEFT JOIN** ou **RIGHT JOIN**).
+
+---
+
+### **Comparação com Excel**
+
+No Excel, **JOIN** equivale a:
+- **INNER JOIN**: Funciona como **PROCV**, retornando apenas os registros que têm correspondência.
+- **LEFT JOIN**: Similar ao **PROCV**, mas mantém os valores da tabela base, mesmo que não haja correspondência.
+- **RIGHT JOIN**: Invertido, mantendo todos os valores da tabela pesquisada, mesmo sem correspondência.
+
+---
+
+## **2. Tipos de JOIN e Casos de Negócio**
+
+A seguir, veremos **INNER JOIN**, **LEFT JOIN** e **RIGHT JOIN**, com exemplos de negócio detalhados.
+
+---
+
+### **INNER JOIN: Produtos Vendidos e Total de Vendas**
+
+O **INNER JOIN** retorna apenas os registros que têm correspondência em ambas as tabelas. 
+
+#### **Caso de Negócio: Total de Vendas por Produto Vendido**
+
+Queremos calcular o total de vendas (em valor) por produto. Isso ajuda a identificar os produtos mais vendidos.
+
+#### **Exemplo de Dados**
+
+**Tabela Produtos (`produtos`):**
+| id_produto | nome_produto        | categoria       | preco_unitario |
+|------------|---------------------|-----------------|----------------|
+| 1          | Notebook Ultra      | Eletrônicos     | 3000.00        |
+| 2          | Smartphone Pro      | Eletrônicos     | 2000.00        |
+| 3          | Mesa Compacta       | Móveis          | 500.00         |
+
+**Tabela Vendas (`vendas`):**
+| id_venda | id_produto | quantidade | data_venda  |
+|----------|------------|------------|-------------|
+| 1        | 1          | 2          | 2023-01-01  |
+| 2        | 2          | 1          | 2023-01-02  |
+| 3        | 3          | 5          | 2023-01-03  |
+
+#### **Query**
 ```sql
-SELECT v.id_venda, v.valor_venda, p.nome_produto
+SELECT 
+    p.id_produto, 
+    p.nome_produto, 
+    SUM(v.quantidade * p.preco_unitario) AS total_vendas
 FROM vendas v
-INNER JOIN produtos p ON v.id_produto = p.id_produto;
+INNER JOIN produtos p ON v.id_produto = p.id_produto
+GROUP BY p.id_produto, p.nome_produto
+ORDER BY total_vendas DESC;
 ```
 
-#### LEFT JOIN
-```sql
-SELECT c.id_cliente, c.primeiro_nome, v.valor_venda
-FROM clientes c
-LEFT JOIN vendas v ON c.id_cliente = v.id_cliente;
-```
+#### **Explicação**
+- **INNER JOIN**: Conecta as tabelas `vendas` e `produtos` com base no `id_produto`.
+- **SUM(v.quantidade * p.preco_unitario)**: Calcula o valor total de vendas para cada produto.
+- **GROUP BY**: Agrupa os resultados por produto.
+- **ORDER BY**: Ordena os produtos com maior receita primeiro.
 
-#### FULL OUTER JOIN
-```sql
-SELECT c.id_cliente, v.id_venda, v.valor_venda
-FROM clientes c
-FULL OUTER JOIN vendas v ON c.id_cliente = v.id_cliente;
-```
+#### **Resultado**
+| id_produto | nome_produto      | total_vendas |
+|------------|-------------------|--------------|
+| 3          | Mesa Compacta     | 2500.00      |
+| 1          | Notebook Ultra    | 6000.00      |
+| 2          | Smartphone Pro    | 2000.00      |
 
 ---
 
-### **15. CTE (Common Table Expressions)**
+### **LEFT JOIN: Produtos Não Vendidos**
 
-As CTEs tornam consultas mais organizadas e legíveis.
+O **LEFT JOIN** retorna todos os registros da tabela da esquerda (base) e adiciona os dados correspondentes da tabela da direita. Se não houver correspondência, os valores da tabela direita são **NULL**.
 
-#### Subquery
+#### **Caso de Negócio: Produtos Nunca Vendidos**
+
+Queremos listar os produtos cadastrados que nunca geraram uma venda. Isso ajuda a identificar itens que precisam de atenção em estratégias de marketing.
+
+#### **Query**
 ```sql
-SELECT id_cliente, SUM(valor_venda) AS total_vendas
-FROM vendas
-GROUP BY id_cliente
-HAVING SUM(valor_venda) > (
-    SELECT AVG(valor_venda) FROM vendas
-);
+SELECT 
+    p.id_produto, 
+    p.nome_produto, 
+    p.categoria, 
+    p.preco_unitario
+FROM produtos p
+LEFT JOIN vendas v ON p.id_produto = v.id_produto
+WHERE v.id_produto IS NULL;
 ```
 
-#### Com CTE
+#### **Explicação**
+- **LEFT JOIN**: Inclui todos os produtos, mesmo aqueles sem correspondência na tabela `vendas`.
+- **WHERE v.id_produto IS NULL**: Filtra os produtos que não possuem vendas (os valores NULL indicam ausência de correspondência).
+
+#### **Resultado**
+| id_produto | nome_produto        | categoria       | preco_unitario |
+|------------|---------------------|-----------------|----------------|
+| 4          | Cadeira Ergonômica | Móveis          | 600.00         |
+| 5          | Monitor Full HD    | Eletrônicos     | 800.00         |
+
+---
+
+### **RIGHT JOIN: Vendas Sem Cadastro no Catálogo**
+
+O **RIGHT JOIN** mantém todos os registros da tabela da direita e adiciona os valores da esquerda quando há correspondência. Usamos para identificar vendas de produtos que não estão cadastrados no catálogo.
+
+#### **Caso de Negócio: Produtos Não Cadastrados**
+
+Queremos identificar os produtos vendidos, mas que não constam no catálogo de produtos.
+
+#### **Query**
 ```sql
-WITH media_vendas AS (
-    SELECT AVG(valor_venda) AS valor_medio FROM vendas
+SELECT 
+    v.id_produto, 
+    COUNT(v.id_venda) AS total_vendas, 
+    SUM(v.quantidade) AS total_quantidade
+FROM produtos p
+RIGHT JOIN vendas v ON p.id_produto = v.id_produto
+WHERE p.id_produto IS NULL
+GROUP BY v.id_produto;
+```
+
+#### **Explicação**
+- **RIGHT JOIN**: Inclui todas as vendas, mesmo que o produto não esteja na tabela `produtos`.
+- **WHERE p.id_produto IS NULL**: Filtra os produtos que estão nas vendas, mas não no catálogo.
+- **GROUP BY**: Agrupa os resultados por `id_produto`.
+
+#### **Resultado**
+| id_produto | total_vendas | total_quantidade |
+|------------|--------------|------------------|
+| 80         | 1            | 3                |
+| 123        | 1            | 5                |
+| 444        | 1            | 2                |
+
+---
+
+### **Comparação dos JOINs**
+
+| Tipo de JOIN | Objetivo                                   | Resultado                                                |
+|--------------|-------------------------------------------|---------------------------------------------------------|
+| **INNER JOIN** | Mostrar apenas os registros com correspondência | Produtos que foram vendidos                             |
+| **LEFT JOIN**  | Mostrar todos os registros da tabela base  | Produtos cadastrados, mesmo sem vendas                  |
+| **RIGHT JOIN** | Mostrar todos os registros da tabela relacionada | Vendas de produtos não cadastrados                     |
+
+---
+
+### **Contexto de Negócio**
+
+Esses exemplos ilustram situações práticas no gerenciamento de dados de vendas e produtos:
+- **INNER JOIN**: Usado para relatórios de produtos mais vendidos ou receita total.
+- **LEFT JOIN**: Identifica lacunas no desempenho de produtos cadastrados.
+- **RIGHT JOIN**: Detecta erros operacionais, como vendas de produtos não cadastrados.
+
+Esses JOINs ajudam a garantir a consistência e a completude dos dados, além de apoiar decisões baseadas em análises confiáveis e detalhadas. 🚀
+---
+
+## **12. SUBQUERY** – **Consultas Aninhadas**
+
+As **Subqueries** permitem usar o resultado de uma consulta dentro de outra.
+
+### **Por que usar?**
+Para análises avançadas, como identificar produtos acima da média de preço.
+
+#### Exemplo: Produtos com preço acima da média
+```sql
+SELECT * FROM produtos
+WHERE preco_unitario > (SELECT AVG(preco_unitario) FROM produtos);
+```
+**Contexto de Negócio:** Identifique produtos premium.
+
+---
+
+## **13. CTE** – **Tornando Consultas Mais Organizadas**
+
+As **CTEs** simplificam consultas complexas, dividindo-as em partes mais gerenciáveis.
+
+### **Por que usar?**
+Para tornar análises complexas mais legíveis e reutilizáveis.
+
+#### Exemplo: Produtos com preço acima da média usando CTE
+```sql
+WITH preco_medio AS (
+    SELECT AVG(preco_unitario) AS media_precos FROM produtos
 )
-SELECT id_cliente, SUM(valor_venda) AS total_vendas
-FROM vendas
-GROUP BY id_cliente
-HAVING SUM(valor_venda) > (SELECT valor_medio FROM media_vendas);
+SELECT * FROM produtos
+WHERE preco_unitario > (SELECT media_precos FROM preco_medio);
 ```
+**Contexto de Negócio:** Torne sua análise mais clara e colaborativa.
 
 ---
 
-Este guia cobre todos os comandos de forma contínua e detalhada. Se precisar de mais exemplos ou ajustes, é só pedir! 🚀
+## **Desafios de Negócio**
+
+1. **Produtos Mais Vendidos:** Identificar os produtos mais vendidos por quantidade.
+2. **Mês com Maior Faturamento:** Determinar o período mais lucrativo.
+3. **Clientes Mais Lucrativos:** Descobrir os clientes que mais gastam.
+
+Cada desafio pode ser ajustado para se alinhar às necessidades específicas do negócio. 🚀
