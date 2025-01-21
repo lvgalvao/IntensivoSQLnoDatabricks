@@ -4,6 +4,9 @@ Bem-vindos ao nosso workshop sobre SQL no **Databricks**. Hoje, vamos explorar o
 
 Nesta aula, exploraremos como usar comandos SQL no Databricks para resolver desafios reais de negócios. Vamos entender como manipular dados em grande escala e como essas ferramentas podem gerar insights estratégicos para diferentes áreas da organização. O foco será em comandos essenciais, como **SELECT**, **JOIN**, **GROUP BY**, **HAVING**, e técnicas avançadas como **Subqueries**, **CTEs**, **Views**, e **Criação de Tabelas**.
 
+Link do excel: https://docs.google.com/spreadsheets/d/1ebChXrvERo9ohuwG4DF6TL4lkrEX8j2Si0q3rkuRNHo/edit?usp=sharing
+Link do escalidraw: https://link.excalidraw.com/l/8pvW6zbNUnD/AOSRHr9dKWd
+
 ---
 
 ## **Comandos SQL Abordados**
